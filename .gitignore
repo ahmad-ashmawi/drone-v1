@@ -1,0 +1,5 @@
+*.SLDPRT~
+*.SLDASM~
+*~$*
+.DS_Store
+Thumbs.db
