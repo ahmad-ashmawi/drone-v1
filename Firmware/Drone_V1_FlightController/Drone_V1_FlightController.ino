@@ -30,9 +30,10 @@ POWER:
 ============================================
 */
 
-// ==== SET TO true ONLY WHEN YOU WANT TO RUN ESC CALIBRATION ====
-// PROPS OFF. Battery must be DISCONNECTED before flashing with this true.
-// After calibrating, set back to false and reflash before ever flying.
+
+// Note: - Set true only when you want to run ESC calibration
+//       - Props off. Battery must be disconnected before flashing with this true.
+//       - After calibrating, set back to false and upload again before ever flying.
 bool CALIBRATE_ESCS = false;
 
 // ESC pins
@@ -167,7 +168,7 @@ void setup() {
   esc3.attach(ESC3_PIN, 1000, 2000);
   esc4.attach(ESC4_PIN, 1000, 2000);
 
-  // ==== ESC CALIBRATION BLOCK ====
+  //  ESC CALIBRATION BLOCK 
   if (CALIBRATE_ESCS) {
     esc1.writeMicroseconds(2000);
     esc2.writeMicroseconds(2000);
@@ -190,7 +191,7 @@ void setup() {
       esc4.writeMicroseconds(1000);
     }
   }
-  // ==== END CALIBRATION BLOCK ====
+  //  END CALIBRATION BLOCK 
 
   esc1.writeMicroseconds(1000);
   esc2.writeMicroseconds(1000);
@@ -240,9 +241,9 @@ void loop() {
   yaw_rate_setpoint = map(yaw_in, 1000, 2000, -180, 180);
 
   mpu.update();
-  roll_angle = - mpu.getAngleX();
-  pitch_angle = - mpu.getAngleY();
-  yaw_rate = - mpu.getGyroZ();
+  roll_angle = mpu.getAngleX();
+  pitch_angle = mpu.getAngleY();
+  yaw_rate = mpu.getGyroZ();
 
   float roll_error = roll_setpoint - roll_angle;
   float pitch_error = pitch_setpoint - pitch_angle;
