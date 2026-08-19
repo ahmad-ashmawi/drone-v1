@@ -98,7 +98,10 @@ bool USE_THROTTLE_CURVE = true;
 float THROTTLE_CURVE_EXP = 1.4; // >1 = softer low end. Try 1.2-1.6.
 
 int applyThrottleCurve(int raw_throttle) {
-  if (!USE_THROTTLE_CURVE) return raw_throttle;
+  if (!USE_THROTTLE_CURVE) 
+  {
+    return raw_throttle;
+  }
   float pct = (raw_throttle - 1000) / 1000.0;
   pct = constrain(pct, 0.0, 1.0);
   float curved = pow(pct, THROTTLE_CURVE_EXP);
@@ -228,6 +231,10 @@ void loop() {
   yaw_in = readChannel(CH_YAW_PIN, 1500);
 
   int throt_curved = applyThrottleCurve(throt_in);
+
+  if (throt_curved > 1800){
+    throt_curved = 1800; 
+  }
 
   unsigned long now = micros();
   dt = (now - last_time) / 1000000.0;
